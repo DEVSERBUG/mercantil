@@ -24,6 +24,7 @@
             --gray: #6c757d;
             --border: #e0e0e0;
             --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --sidebar-width: 280px;
         }
         
         body {
@@ -31,14 +32,179 @@
             color: var(--dark);
             line-height: 1.6;
             padding: 20px;
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
         }
         
         .container {
             display: flex;
-            flex-direction: column;
             min-height: calc(100vh - 40px);
+            gap: 24px;
+        }
+        
+        /* Sidebar com lista de produtos */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            padding: 24px;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+            max-height: calc(100vh - 40px);
+            overflow-y: auto;
+        }
+        
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--primary);
+        }
+        
+        .sidebar-header i {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .sidebar-header h2 {
+            color: var(--primary-dark);
+            font-size: 1.4rem;
+        }
+        
+        .search-box {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 12px 16px 12px 42px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        
+        .search-box i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+        }
+        
+        .category-filter {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .category-btn {
+            padding: 8px 12px;
+            background-color: var(--light);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .category-btn:hover {
+            background-color: #e9ecef;
+        }
+        
+        .category-btn.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .product-catalog {
+            list-style: none;
+        }
+        
+        .catalog-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.2s;
+            border-radius: 6px;
+        }
+        
+        .catalog-item:hover {
+            background-color: rgba(76, 175, 80, 0.05);
+            transform: translateX(4px);
+        }
+        
+        .catalog-item-info h4 {
+            margin-bottom: 4px;
+            font-size: 1rem;
+        }
+        
+        .catalog-item-info .category {
+            font-size: 0.8rem;
+            color: var(--gray);
+            text-transform: capitalize;
+        }
+        
+        .catalog-item-price {
+            font-weight: 600;
+            color: var(--primary-dark);
+            font-size: 0.9rem;
+        }
+        
+        .add-from-catalog-btn {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: var(--primary);
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .add-from-catalog-btn:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .empty-catalog {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--gray);
+        }
+        
+        .empty-catalog i {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+        
+        .catalog-stats {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--gray);
+            text-align: center;
+        }
+        
+        /* Conteúdo principal (mantém o layout original) */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
             gap: 24px;
         }
         
@@ -71,14 +237,14 @@
             font-size: 1.1rem;
         }
         
-        main {
+        .content-row {
             display: flex;
             flex-direction: column;
             gap: 24px;
         }
         
         @media (min-width: 992px) {
-            main {
+            .content-row {
                 flex-direction: row;
             }
             
@@ -166,6 +332,15 @@
         .btn-primary:hover {
             background-color: var(--primary-dark);
             transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #1976D2;
         }
         
         .btn-danger {
@@ -309,6 +484,69 @@
             color: var(--gray);
         }
         
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 12px;
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--primary);
+        }
+        
+        .modal-header h3 {
+            color: var(--primary-dark);
+            font-size: 1.5rem;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--gray);
+            cursor: pointer;
+            padding: 5px;
+        }
+        
+        @media (max-width: 1200px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                position: static;
+                max-height: none;
+            }
+            
+            .catalog-item:hover {
+                transform: none;
+            }
+        }
+        
         @media (max-width: 768px) {
             body {
                 padding: 10px;
@@ -318,7 +556,7 @@
                 gap: 16px;
             }
             
-            .card {
+            .card, .sidebar {
                 padding: 18px;
             }
             
@@ -339,106 +577,216 @@
 </head>
 <body>
     <div class="container">
-        <header>
-            <div class="logo">
-                <i class="fas fa-shopping-cart"></i>
-                <h1>Mercantil Control</h1>
+        <!-- Sidebar com catálogo de produtos -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-boxes"></i>
+                <h2>Catálogo de Produtos</h2>
             </div>
-            <p class="subtitle">Controle seus gastos durante as compras no mercantil</p>
-        </header>
+            
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchCatalog" placeholder="Buscar produto...">
+            </div>
+            
+            <div class="category-filter">
+                <button class="category-btn active" data-category="all">Todos</button>
+                <button class="category-btn" data-category="alimentos">Alimentos</button>
+                <button class="category-btn" data-category="bebidas">Bebidas</button>
+                <button class="category-btn" data-category="limpeza">Limpeza</button>
+                <button class="category-btn" data-category="hortifruti">Hortifruti</button>
+                <button class="category-btn" data-category="padaria">Padaria</button>
+                <button class="category-btn" data-category="carnes">Carnes</button>
+                <button class="category-btn" data-category="outros">Outros</button>
+            </div>
+            
+            <ul class="product-catalog" id="productCatalog">
+                <!-- Lista de produtos do catálogo será inserida via JavaScript -->
+            </ul>
+            
+            <div class="catalog-stats">
+                <div id="catalogCount">0 produtos no catálogo</div>
+                <button class="btn btn-secondary" id="addToCatalog" style="margin-top: 15px; width: 100%; padding: 10px;">
+                    <i class="fas fa-plus"></i> Adicionar ao Catálogo
+                </button>
+            </div>
+        </aside>
         
-        <main>
-            <section class="input-section">
-                <div class="card">
-                    <h2><i class="fas fa-plus-circle"></i> Adicionar Produto</h2>
-                    
-                    <div class="form-group">
-                        <label for="productName">Nome do Produto</label>
-                        <input type="text" id="productName" placeholder="Ex: Arroz, Feijão, Leite...">
-                    </div>
-                    
-                    <div class="input-row">
+        <!-- Conteúdo principal -->
+        <div class="main-content">
+            <header>
+                <div class="logo">
+                    <i class="fas fa-shopping-cart"></i>
+                    <h1>Mercantil Control</h1>
+                </div>
+                <p class="subtitle">Controle seus gastos durante as compras no mercantil</p>
+            </header>
+            
+            <div class="content-row">
+                <section class="input-section">
+                    <div class="card">
+                        <h2><i class="fas fa-plus-circle"></i> Adicionar Produto</h2>
+                        
                         <div class="form-group">
-                            <label for="productPrice">Valor Unitário (R$)</label>
-                            <input type="number" id="productPrice" min="0" step="0.01" placeholder="0,00">
+                            <label for="productName">Nome do Produto</label>
+                            <input type="text" id="productName" placeholder="Ex: Arroz, Feijão, Leite...">
+                        </div>
+                        
+                        <div class="input-row">
+                            <div class="form-group">
+                                <label for="productPrice">Valor Unitário (R$)</label>
+                                <input type="number" id="productPrice" min="0" step="0.01" placeholder="0,00">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="productQuantity">Quantidade</label>
+                                <input type="number" id="productQuantity" min="1" value="1">
+                            </div>
                         </div>
                         
                         <div class="form-group">
-                            <label for="productQuantity">Quantidade</label>
-                            <input type="number" id="productQuantity" min="1" value="1">
+                            <label for="productCategory">Categoria</label>
+                            <select id="productCategory">
+                                <option value="">Selecione uma categoria</option>
+                                <option value="alimentos">Alimentos</option>
+                                <option value="bebidas">Bebidas</option>
+                                <option value="limpeza">Limpeza</option>
+                                <option value="hortifruti">Hortifruti</option>
+                                <option value="padaria">Padaria</option>
+                                <option value="carnes">Carnes</option>
+                                <option value="outros">Outros</option>
+                            </select>
+                        </div>
+                        
+                        <button class="btn btn-primary" id="addProduct">
+                            <i class="fas fa-plus"></i> Adicionar à Lista
+                        </button>
+                        
+                        <button class="btn btn-danger" id="clearAll" style="margin-top: 12px;">
+                            <i class="fas fa-trash-alt"></i> Limpar Tudo
+                        </button>
+                    </div>
+                    
+                    <div class="stats">
+                        <div class="stat-item">
+                            <div class="stat-value" id="totalProducts">0</div>
+                            <div class="stat-label">Produtos</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="totalItems">0</div>
+                            <div class="stat-label">Itens</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="avgPrice">R$ 0,00</div>
+                            <div class="stat-label">Preço Médio</div>
                         </div>
                     </div>
-                    
-                    <div class="form-group">
-                        <label for="productCategory">Categoria (opcional)</label>
-                        <select id="productCategory">
-                            <option value="">Selecione uma categoria</option>
-                            <option value="alimentos">Alimentos</option>
-                            <option value="bebidas">Bebidas</option>
-                            <option value="limpeza">Limpeza</option>
-                            <option value="hortifruti">Hortifruti</option>
-                            <option value="outros">Outros</option>
-                        </select>
-                    </div>
-                    
-                    <button class="btn btn-primary" id="addProduct">
-                        <i class="fas fa-plus"></i> Adicionar à Lista
-                    </button>
-                    
-                    <button class="btn btn-danger" id="clearAll" style="margin-top: 12px;">
-                        <i class="fas fa-trash-alt"></i> Limpar Tudo
-                    </button>
-                </div>
+                </section>
                 
-                <div class="stats">
-                    <div class="stat-item">
-                        <div class="stat-value" id="totalProducts">0</div>
-                        <div class="stat-label">Produtos</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value" id="totalItems">0</div>
-                        <div class="stat-label">Itens</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value" id="avgPrice">R$ 0,00</div>
-                        <div class="stat-label">Preço Médio</div>
-                    </div>
-                </div>
-            </section>
-            
-            <section class="summary-section">
-                <div class="card summary-card">
-                    <h2><i class="fas fa-list-alt"></i> Resumo da Compra</h2>
-                    
-                    <div class="total-container">
-                        <div class="total-label">Total Gasto</div>
-                        <div class="total-value" id="totalSpent">R$ 0,00</div>
-                    </div>
-                    
-                    <h3>Produtos Adicionados</h3>
-                    
-                    <ul class="product-list" id="productList">
-                        <!-- Lista de produtos será inserida aqui via JavaScript -->
-                        <div class="empty-list">
-                            <i class="fas fa-shopping-basket"></i>
-                            <p>Nenhum produto adicionado ainda</p>
-                            <p style="margin-top: 8px; font-size: 0.9rem;">Adicione produtos usando o formulário ao lado</p>
+                <section class="summary-section">
+                    <div class="card summary-card">
+                        <h2><i class="fas fa-list-alt"></i> Resumo da Compra</h2>
+                        
+                        <div class="total-container">
+                            <div class="total-label">Total Gasto</div>
+                            <div class="total-value" id="totalSpent">R$ 0,00</div>
                         </div>
-                    </ul>
-                </div>
-            </section>
-        </main>
-        
-        <footer>
-            <p>Mercantil Control &copy; 2023 - Controle seus gastos de forma simples e eficiente</p>
-            <p style="margin-top: 5px; font-size: 0.8rem;">Desenvolvido com <i class="fas fa-heart" style="color: #e91e63;"></i> para facilitar suas compras</p>
-        </footer>
+                        
+                        <h3>Produtos Adicionados</h3>
+                        
+                        <ul class="product-list" id="productList">
+                            <!-- Lista de produtos será inserida aqui via JavaScript -->
+                        </ul>
+                    </div>
+                </section>
+            </div>
+            
+            <footer>
+                <p>Mercantil Control &copy; 2023 - Controle seus gastos de forma simples e eficiente</p>
+                <p style="margin-top: 5px; font-size: 0.8rem;">Catálogo de produtos para não esquecer nada!</p>
+            </footer>
+        </div>
+    </div>
+    
+    <!-- Modal para adicionar produto ao catálogo -->
+    <div class="modal" id="addToCatalogModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-plus-circle"></i> Adicionar Produto ao Catálogo</h3>
+                <button class="close-modal" id="closeModal">&times;</button>
+            </div>
+            
+            <div class="form-group">
+                <label for="catalogProductName">Nome do Produto</label>
+                <input type="text" id="catalogProductName" placeholder="Ex: Arroz, Feijão, Leite...">
+            </div>
+            
+            <div class="form-group">
+                <label for="catalogProductPrice">Preço Médio (R$)</label>
+                <input type="number" id="catalogProductPrice" min="0" step="0.01" placeholder="Preço aproximado">
+            </div>
+            
+            <div class="form-group">
+                <label for="catalogProductCategory">Categoria</label>
+                <select id="catalogProductCategory">
+                    <option value="alimentos">Alimentos</option>
+                    <option value="bebidas">Bebidas</option>
+                    <option value="limpeza">Limpeza</option>
+                    <option value="hortifruti">Hortifruti</option>
+                    <option value="padaria">Padaria</option>
+                    <option value="carnes">Carnes</option>
+                    <option value="outros">Outros</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="catalogProductNotes">Observações (opcional)</label>
+                <input type="text" id="catalogProductNotes" placeholder="Ex: Marca preferida, tamanho...">
+            </div>
+            
+            <button class="btn btn-primary" id="saveToCatalog">
+                <i class="fas fa-save"></i> Salvar no Catálogo
+            </button>
+        </div>
     </div>
 
     <script>
         // Estado do aplicativo
         let products = JSON.parse(localStorage.getItem('mercantilProducts')) || [];
+        let catalog = JSON.parse(localStorage.getItem('mercantilCatalog')) || [];
         let nextId = products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1;
+        let nextCatalogId = catalog.length > 0 ? Math.max(...catalog.map(p => p.id)) + 1 : 1;
+        
+        // Catálogo padrão (se não houver dados salvos)
+        const defaultCatalog = [
+            { id: 1, name: "Arroz", price: 25.90, category: "alimentos", notes: "Tipo 1, 5kg" },
+            { id: 2, name: "Feijão", price: 8.50, category: "alimentos", notes: "Carioca, 1kg" },
+            { id: 3, name: "Açúcar", price: 4.80, category: "alimentos", notes: "Refinado, 1kg" },
+            { id: 4, name: "Café", price: 18.90, category: "alimentos", notes: "Marca preferida" },
+            { id: 5, name: "Óleo", price: 9.50, category: "alimentos", notes: "Soja, 900ml" },
+            { id: 6, name: "Leite", price: 5.90, category: "bebidas", notes: "Integral, 1L" },
+            { id: 7, name: "Refrigerante", price: 8.90, category: "bebidas", notes: "2L" },
+            { id: 8, name: "Suco", price: 7.50, category: "bebidas", notes: "Caixa 1L" },
+            { id: 9, name: "Sabão em Pó", price: 15.90, category: "limpeza", notes: "3kg" },
+            { id: 10, name: "Detergente", price: 2.50, category: "limpeza", notes: "500ml" },
+            { id: 11, name: "Papel Higiênico", price: 18.90, category: "limpeza", notes: "Pacote 12 rolos" },
+            { id: 12, name: "Banana", price: 6.90, category: "hortifruti", notes: "Dúzia" },
+            { id: 13, name: "Tomate", price: 9.90, category: "hortifruti", notes: "kg" },
+            { id: 14, name: "Cebola", price: 5.50, category: "hortifruti", notes: "kg" },
+            { id: 15, name: "Alface", price: 3.50, category: "hortifruti", notes: "Unidade" },
+            { id: 16, name: "Pão Francês", price: 1.20, category: "padaria", notes: "Unidade" },
+            { id: 17, name: "Queijo", price: 28.90, category: "padaria", notes: "kg" },
+            { id: 18, name: "Presunto", price: 24.90, category: "padaria", notes: "kg" },
+            { id: 19, name: "Carne Bovina", price: 39.90, category: "carnes", notes: "kg" },
+            { id: 20, name: "Frango", price: 16.90, category: "carnes", notes: "kg" }
+        ];
+        
+        // Se o catálogo estiver vazio, carregar o padrão
+        if (catalog.length === 0) {
+            catalog = defaultCatalog;
+            nextCatalogId = defaultCatalog.length + 1;
+            localStorage.setItem('mercantilCatalog', JSON.stringify(catalog));
+        }
         
         // Elementos DOM
         const productNameInput = document.getElementById('productName');
@@ -452,6 +800,22 @@
         const totalProductsElement = document.getElementById('totalProducts');
         const totalItemsElement = document.getElementById('totalItems');
         const avgPriceElement = document.getElementById('avgPrice');
+        
+        // Elementos do catálogo
+        const productCatalog = document.getElementById('productCatalog');
+        const searchCatalogInput = document.getElementById('searchCatalog');
+        const categoryFilterBtns = document.querySelectorAll('.category-btn');
+        const addToCatalogBtn = document.getElementById('addToCatalog');
+        const catalogCountElement = document.getElementById('catalogCount');
+        
+        // Elementos do modal
+        const addToCatalogModal = document.getElementById('addToCatalogModal');
+        const closeModalBtn = document.getElementById('closeModal');
+        const catalogProductNameInput = document.getElementById('catalogProductName');
+        const catalogProductPriceInput = document.getElementById('catalogProductPrice');
+        const catalogProductCategoryInput = document.getElementById('catalogProductCategory');
+        const catalogProductNotesInput = document.getElementById('catalogProductNotes');
+        const saveToCatalogBtn = document.getElementById('saveToCatalog');
         
         // Formatar valor para Real brasileiro
         function formatCurrency(value) {
@@ -476,14 +840,14 @@
             localStorage.setItem('mercantilProducts', JSON.stringify(products));
         }
         
-        // Renderizar lista de produtos
+        // Renderizar lista de produtos da compra
         function renderProductList() {
             if (products.length === 0) {
                 productList.innerHTML = `
                     <div class="empty-list">
                         <i class="fas fa-shopping-basket"></i>
                         <p>Nenhum produto adicionado ainda</p>
-                        <p style="margin-top: 8px; font-size: 0.9rem;">Adicione produtos usando o formulário ao lado</p>
+                        <p style="margin-top: 8px; font-size: 0.9rem;">Adicione produtos usando o formulário ou clique em um item do catálogo</p>
                     </div>
                 `;
                 return;
@@ -511,7 +875,56 @@
             `).join('');
         }
         
-        // Adicionar produto
+        // Renderizar catálogo de produtos
+        function renderCatalog(filter = '', category = 'all') {
+            let filteredCatalog = catalog;
+            
+            // Aplicar filtro de busca
+            if (filter) {
+                const searchTerm = filter.toLowerCase();
+                filteredCatalog = catalog.filter(product => 
+                    product.name.toLowerCase().includes(searchTerm) ||
+                    (product.notes && product.notes.toLowerCase().includes(searchTerm))
+                );
+            }
+            
+            // Aplicar filtro de categoria
+            if (category !== 'all') {
+                filteredCatalog = filteredCatalog.filter(product => product.category === category);
+            }
+            
+            // Atualizar contador
+            catalogCountElement.textContent = `${filteredCatalog.length} produtos no catálogo`;
+            
+            if (filteredCatalog.length === 0) {
+                productCatalog.innerHTML = `
+                    <div class="empty-catalog">
+                        <i class="fas fa-search"></i>
+                        <p>Nenhum produto encontrado</p>
+                        <p style="margin-top: 8px; font-size: 0.9rem;">${filter ? 'Tente buscar por outro termo' : 'Adicione produtos ao catálogo'}</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            productCatalog.innerHTML = filteredCatalog.map(product => `
+                <li class="catalog-item" data-id="${product.id}">
+                    <div class="catalog-item-info">
+                        <h4>${product.name}</h4>
+                        <div class="category">${product.category}</div>
+                        ${product.notes ? `<div style="font-size: 0.75rem; color: var(--gray); margin-top: 4px;">${product.notes}</div>` : ''}
+                    </div>
+                    <div>
+                        <div class="catalog-item-price">${formatCurrency(product.price)}</div>
+                        <button class="add-from-catalog-btn" onclick="addFromCatalog(${product.id})" title="Adicionar à lista">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </li>
+            `).join('');
+        }
+        
+        // Adicionar produto à lista de compras
         function addProduct() {
             const name = productNameInput.value.trim();
             const price = parseFloat(productPriceInput.value);
@@ -569,7 +982,33 @@
             }, 1000);
         }
         
-        // Excluir produto
+        // Adicionar produto do catálogo à lista
+        function addFromCatalog(productId) {
+            const catalogProduct = catalog.find(p => p.id === productId);
+            
+            if (!catalogProduct) return;
+            
+            // Preencher formulário com dados do catálogo
+            productNameInput.value = catalogProduct.name;
+            productPriceInput.value = catalogProduct.price;
+            productQuantityInput.value = 1;
+            productCategoryInput.value = catalogProduct.category;
+            
+            // Feedback visual
+            const addBtn = document.querySelector(`.add-from-catalog-btn[onclick="addFromCatalog(${productId})"]`);
+            const originalHtml = addBtn.innerHTML;
+            addBtn.innerHTML = '<i class="fas fa-check"></i>';
+            addBtn.style.backgroundColor = '#388E3C';
+            addBtn.style.color = 'white';
+            
+            setTimeout(() => {
+                addBtn.innerHTML = originalHtml;
+                addBtn.style.backgroundColor = '';
+                addBtn.style.color = '';
+            }, 1000);
+        }
+        
+        // Excluir produto da lista de compras
         function deleteProduct(id) {
             if (confirm('Tem certeza que deseja remover este produto da lista?')) {
                 products = products.filter(product => product.id !== id);
@@ -578,7 +1017,7 @@
             }
         }
         
-        // Limpar tudo
+        // Limpar toda a lista de compras
         function clearAllProducts() {
             if (products.length === 0) return;
             
@@ -597,6 +1036,71 @@
             }
         }
         
+        // Adicionar produto ao catálogo
+        function addProductToCatalog() {
+            const name = catalogProductNameInput.value.trim();
+            const price = parseFloat(catalogProductPriceInput.value);
+            const category = catalogProductCategoryInput.value;
+            const notes = catalogProductNotesInput.value.trim();
+            
+            // Validação
+            if (!name) {
+                alert('Por favor, informe o nome do produto');
+                catalogProductNameInput.focus();
+                return;
+            }
+            
+            if (!price || price <= 0) {
+                alert('Por favor, informe um preço válido para o produto');
+                catalogProductPriceInput.focus();
+                return;
+            }
+            
+            // Verificar se o produto já existe no catálogo
+            const existingProduct = catalog.find(p => p.name.toLowerCase() === name.toLowerCase());
+            if (existingProduct) {
+                if (confirm('Este produto já existe no catálogo. Deseja atualizá-lo?')) {
+                    // Atualizar produto existente
+                    existingProduct.price = price;
+                    existingProduct.category = category;
+                    existingProduct.notes = notes;
+                } else {
+                    return;
+                }
+            } else {
+                // Adicionar novo produto
+                const product = {
+                    id: nextCatalogId++,
+                    name,
+                    price,
+                    category,
+                    notes,
+                    addedAt: new Date().toISOString()
+                };
+                
+                catalog.push(product);
+            }
+            
+            // Salvar no localStorage
+            localStorage.setItem('mercantilCatalog', JSON.stringify(catalog));
+            
+            // Limpar formulário e fechar modal
+            catalogProductNameInput.value = '';
+            catalogProductPriceInput.value = '';
+            catalogProductNotesInput.value = '';
+            addToCatalogModal.style.display = 'none';
+            
+            // Atualizar catálogo
+            renderCatalog();
+            
+            // Feedback visual
+            saveToCatalogBtn.innerHTML = '<i class="fas fa-check"></i> Salvo!';
+            
+            setTimeout(() => {
+                saveToCatalogBtn.innerHTML = '<i class="fas fa-save"></i> Salvar no Catálogo';
+            }, 1000);
+        }
+        
         // Event Listeners
         addProductBtn.addEventListener('click', addProduct);
         clearAllBtn.addEventListener('click', clearAllProducts);
@@ -608,10 +1112,48 @@
             }
         });
         
+        // Eventos do catálogo
+        searchCatalogInput.addEventListener('input', function() {
+            const activeCategory = document.querySelector('.category-btn.active').dataset.category;
+            renderCatalog(this.value, activeCategory);
+        });
+        
+        categoryFilterBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Remover classe active de todos os botões
+                categoryFilterBtns.forEach(b => b.classList.remove('active'));
+                // Adicionar classe active ao botão clicado
+                this.classList.add('active');
+                
+                // Filtrar catálogo
+                const category = this.dataset.category;
+                renderCatalog(searchCatalogInput.value, category);
+            });
+        });
+        
+        addToCatalogBtn.addEventListener('click', function() {
+            addToCatalogModal.style.display = 'flex';
+            catalogProductNameInput.focus();
+        });
+        
+        closeModalBtn.addEventListener('click', function() {
+            addToCatalogModal.style.display = 'none';
+        });
+        
+        saveToCatalogBtn.addEventListener('click', addProductToCatalog);
+        
+        // Fechar modal ao clicar fora
+        window.addEventListener('click', function(e) {
+            if (e.target === addToCatalogModal) {
+                addToCatalogModal.style.display = 'none';
+            }
+        });
+        
         // Inicializar a aplicação
         document.addEventListener('DOMContentLoaded', function() {
             renderProductList();
             updateStats();
+            renderCatalog();
         });
     </script>
 </body>
